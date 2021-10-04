@@ -1,0 +1,67 @@
+@layer components {
+  input:not([type="checkbox"]) {
+    @apply px-4 py-4 bg-white border border-gray-400 rounded-3xl;
+
+    &, &::placeholder {
+      @apply text-xs text-gray-600;
+    }
+  
+    &:focus {
+      @apply outline-none shadow-light-blue;
+    }
+  }
+
+  .control {
+    @apply flex items-center;
+  }
+
+  input[type="checkbox"] {
+    @apply appearance-none relative inline-block;
+
+    &::before,
+    &::after {
+      content: '';
+      @apply block w-4 h-4;
+    }
+
+    &::before {
+      @apply bg-white border border-gray-500 rounded-md transition-all;
+    }
+
+    &::after {
+      @apply absolute left-0 top-0 opacity-0;
+    }
+
+    &:focus {
+      &::before {
+        @apply shadow-light-blue;
+      }
+    }
+
+    & + label {
+      @apply text-xs inline-block ml-2 align-middle;
+    }
+
+    &:checked {
+      &::before {
+        @apply bg-primary;
+      }
+
+      &::after {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  .btn {
+    @apply bg-primary text-light rounded-3xl text-xs py-3 px-4;
+  }
+
+  hr {
+    @apply border-t border-gray-200 my-4 w-full block;
+  }
+
+  .link {
+    @apply text-primary text-xs;
+  }
+}
