@@ -1,6 +1,8 @@
 <script lang="ts">
-import Button from "../components/Button.svelte";
-import Input from "../components/Input.svelte";
+import client from "$utils/feathers";
+
+import Button from "$components/Button.svelte";
+import Input from "$components/Input.svelte";
 
 let firstName : string = '';
 let lastName : string = '';
@@ -11,7 +13,21 @@ let disabled : boolean = false;
 
 async function handleSubmit(e : Event) {
   e.preventDefault();
-  // here goes submit logic!
+  
+  if (passwordConfirm !== password) return;
+
+  try {
+    await client.service('users').create({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+    
+    console.log('Successfully created user!');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 </script>
@@ -19,24 +35,24 @@ async function handleSubmit(e : Event) {
 <div class="">
   <h1 class="text-2xl mb-6">Create new account!</h1>
   <form class="flex flex-col gap-y-4" on:submit={handleSubmit}>
-    <Input placeholder='First name' type='text' required value={firstName}/>
+    <Input placeholder='First name' type='text' required bind:value={firstName}/>
     <Input
       placeholder='Last name' type='text'
       required
-      value={lastName}
+      bind:value={lastName}
     />
-    <Input placeholder="Email" type="email" required="required" value={email} />
+    <Input placeholder="Email" type="email" required="required" bind:value={email} />
     <Input
       placeholder="Password"
       type="password"
       required="required"
-      value={password}
+      bind:value={password}
     />
     <Input
       placeholder="Password Confirm"
       type="password"
       required="required"
-      value={passwordConfirm}
+      bind:value={passwordConfirm}
     />
     <Button type="submit" {disabled}>Register Account</Button>
   </form>

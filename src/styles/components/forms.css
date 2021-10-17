@@ -55,6 +55,10 @@
 
   .btn {
     @apply bg-primary text-light rounded-3xl text-xs py-3 px-4;
+
+    &:disabled {
+      @apply bg-secondary;
+    }
   }
 
   hr {
